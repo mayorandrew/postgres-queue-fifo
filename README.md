@@ -11,7 +11,7 @@ The POC is based on row locks and transactions. Each job is running within an op
 
 1. There are two tables in the database:
     1. `Job`
-        ```PostgreSQL
+        ```sql
         -- CreateEnum
         CREATE TYPE "JobStatus" AS ENUM ('queued', 'started', 'succeeded', 'failed');
            
@@ -47,7 +47,7 @@ The POC is based on row locks and transactions. Each job is running within an op
          ```
        
     2. `QueueGroup`
-        ```PostgreSQL
+        ```sql
         -- CreateTable
         CREATE TABLE "QueueGroup" (
             "queue" TEXT NOT NULL,
