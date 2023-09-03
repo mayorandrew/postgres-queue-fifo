@@ -25,8 +25,5 @@
   "peerDependencies": {
     "kysely": "^0.26.1",
     "pg": "^8.11.3"
-  },
-  "dependencies": {
-    "make-error-cause": "^2.3.0"
   }
 }

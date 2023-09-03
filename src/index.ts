@@ -1,13 +1,6 @@
 import { Kysely, Selectable, Simplify, sql, Transaction } from 'kysely';
 import type { DB, Job } from 'kysely-codegen';
-import { BaseError } from 'make-error-cause';
 import pg from 'pg';
-
-export class JobAlreadyLocked extends BaseError {
-  constructor(cause: Error) {
-    super('Job is already locked', cause);
-  }
-}
 
 /**
  * Queues new job for execution in a specific queue.
