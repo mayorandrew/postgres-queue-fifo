@@ -1,0 +1,230 @@
+sequenceDiagram
+participant P
+participant Q
+participant C1
+participant C2
+participant C3
+participant C4
+participant C5
+participant C6
+participant C7
+participant C8
+participant C9
+participant C10
+P -) Q: [3] q=1 g=a i=0
+P -) Q: [5] q=1 g=b i=1
+P -) Q: [6] q=1 g=c i=2
+P -) Q: [8] q=1 g=d i=3
+P -) Q: [10] q=1 g=e i=4
+P -) Q: [11] q=2 g=a i=5
+P -) Q: [13] q=2 g=b i=6
+P -) Q: [15] q=2 g=c i=7
+P -) Q: [17] q=2 g=d i=8
+P -) Q: [19] q=2 g=e i=9
+P -) Q: [21] q=1 g=a i=10
+P -) Q: [22] q=1 g=b i=11
+P -) Q: [24] q=1 g=c i=12
+P -) Q: [25] q=1 g=d i=13
+P -) Q: [27] q=1 g=e i=14
+P -) Q: [29] q=2 g=a i=15
+P -) Q: [30] q=2 g=b i=16
+P -) Q: [32] q=2 g=c i=17
+P -) Q: [33] q=2 g=d i=18
+P -) Q: [35] q=2 g=e i=19
+P -) Q: [37] q=1 g=a i=20
+P -) Q: [38] q=1 g=b i=21
+P -) Q: [40] q=1 g=c i=22
+P -) Q: [41] q=1 g=d i=23
+P -) Q: [43] q=1 g=e i=24
+P -) Q: [44] q=2 g=a i=25
+P -) Q: [46] q=2 g=b i=26
+P -) Q: [47] q=2 g=c i=27
+P -) Q: [49] q=2 g=d i=28
+P -) Q: [50] q=2 g=e i=29
+P -) Q: [52] q=1 g=a i=30
+P -) Q: [53] q=1 g=b i=31
+P -) Q: [54] q=1 g=c i=32
+P -) Q: [56] q=1 g=d i=33
+P -) Q: [58] q=1 g=e i=34
+P -) Q: [59] q=2 g=a i=35
+P -) Q: [61] q=2 g=b i=36
+P -) Q: [62] q=2 g=c i=37
+P -) Q: [63] q=2 g=d i=38
+P -) Q: [65] q=2 g=e i=39
+P -) Q: [66] q=1 g=a i=40
+P -) Q: [68] q=1 g=b i=41
+P -) Q: [69] q=1 g=c i=42
+P -) Q: [71] q=1 g=d i=43
+P -) Q: [72] q=1 g=e i=44
+P -) Q: [74] q=2 g=a i=45
+P -) Q: [75] q=2 g=b i=46
+P -) Q: [77] q=2 g=c i=47
+P -) Q: [78] q=2 g=d i=48
+P -) Q: [80] q=2 g=e i=49
+Q ->>+ C1: [98] i=2
+Note over C1: [98] 4 ms | q=1 | g=c | v=0
+C1 -->>- Q: [102] q=1 g=c i=2
+Q ->>+ C2: [104] i=0
+Note over C2: [104] 4 ms | q=1 | g=a | v=0
+Q ->>+ C4: [105] i=6
+Note over C4: [105] 4 ms | q=2 | g=b | v=0
+Q ->>+ C3: [106] i=1
+Note over C3: [106] 8 ms | q=1 | g=b | v=0
+Q ->>+ C6: [106] i=9
+Note over C6: [106] 0 ms | q=2 | g=e | v=0
+Q ->>+ C5: [106] i=7
+Note over C5: [106] 7 ms | q=2 | g=c | v=0
+C6 -->>- Q: [106] q=2 g=e i=9
+Q ->>+ C9: [107] i=8
+Note over C9: [107] 3 ms | q=2 | g=d | v=0
+C2 -->>- Q: [108] q=1 g=a i=0
+Q ->>+ C10: [108] i=4
+Note over C10: [108] 5 ms | q=1 | g=e | v=0
+Q ->>+ C7: [108] i=5
+Note over C7: [108] 4 ms | q=2 | g=a | v=0
+Q ->>+ C8: [109] i=3
+Note over C8: [109] 9 ms | q=1 | g=d | v=0
+C4 -->>- Q: [109] q=2 g=b i=6
+C9 -->>- Q: [110] q=2 g=d i=8
+C7 -->>- Q: [113] q=2 g=a i=5
+Q ->>+ C1: [113] i=12
+Note over C1: [113] 8 ms | q=1 | g=c | v=1
+C3 -->>- Q: [114] q=1 g=b i=1
+C5 -->>- Q: [114] q=2 g=c i=7
+C10 -->>- Q: [114] q=1 g=e i=4
+Q ->>+ C6: [117] i=19
+Note over C6: [117] 4 ms | q=2 | g=e | v=1
+Q ->>+ C2: [117] i=10
+Note over C2: [117] 6 ms | q=1 | g=a | v=1
+C8 -->>- Q: [119] q=1 g=d i=3
+Q ->>+ C4: [119] i=18
+Note over C4: [119] 7 ms | q=2 | g=d | v=1
+C6 -->>- Q: [120] q=2 g=e i=19
+C1 -->>- Q: [121] q=1 g=c i=12
+Q ->>+ C7: [122] i=17
+Note over C7: [122] 1 ms | q=2 | g=c | v=1
+Q ->>+ C9: [123] i=16
+Note over C9: [123] 1 ms | q=2 | g=b | v=1
+Q ->>+ C10: [123] i=11
+Note over C10: [123] 1 ms | q=1 | g=b | v=1
+C2 -->>- Q: [123] q=1 g=a i=10
+C7 -->>- Q: [124] q=2 g=c i=17
+Q ->>+ C3: [124] i=14
+Note over C3: [124] 8 ms | q=1 | g=e | v=1
+C9 -->>- Q: [125] q=2 g=b i=16
+C10 -->>- Q: [125] q=1 g=b i=11
+C4 -->>- Q: [126] q=2 g=d i=18
+Q ->>+ C5: [126] i=15
+Note over C5: [126] 2 ms | q=2 | g=a | v=1
+C5 -->>- Q: [128] q=2 g=a i=15
+Q ->>+ C8: [130] i=13
+Note over C8: [130] 9 ms | q=1 | g=d | v=1
+Q ->>+ C6: [131] i=22
+Note over C6: [131] 4 ms | q=1 | g=c | v=2
+Q ->>+ C1: [132] i=29
+Note over C1: [132] 4 ms | q=2 | g=e | v=2
+C3 -->>- Q: [132] q=1 g=e i=14
+Q ->>+ C7: [134] i=28
+Note over C7: [134] 1 ms | q=2 | g=d | v=2
+C7 -->>- Q: [134] q=2 g=d i=28
+Q ->>+ C2: [134] i=26
+Note over C2: [134] 7 ms | q=2 | g=b | v=2
+Q ->>+ C9: [135] i=20
+Note over C9: [135] 8 ms | q=1 | g=a | v=2
+C6 -->>- Q: [135] q=1 g=c i=22
+C1 -->>- Q: [135] q=2 g=e i=29
+Q ->>+ C10: [136] i=27
+Note over C10: [136] 7 ms | q=2 | g=c | v=2
+Q ->>+ C4: [136] i=21
+Note over C4: [136] 8 ms | q=1 | g=b | v=2
+C8 -->>- Q: [138] q=1 g=d i=13
+Q ->>+ C5: [139] i=25
+Note over C5: [139] 6 ms | q=2 | g=a | v=2
+C2 -->>- Q: [141] q=2 g=b i=26
+C9 -->>- Q: [142] q=1 g=a i=20
+C10 -->>- Q: [142] q=2 g=c i=27
+Q ->>+ C3: [143] i=24
+Note over C3: [143] 0 ms | q=1 | g=e | v=2
+Q ->>+ C7: [143] i=39
+Note over C7: [143] 8 ms | q=2 | g=e | v=3
+C3 -->>- Q: [143] q=1 g=e i=24
+C4 -->>- Q: [144] q=1 g=b i=21
+Q ->>+ C1: [144] i=38
+Note over C1: [144] 8 ms | q=2 | g=d | v=3
+C5 -->>- Q: [145] q=2 g=a i=25
+Q ->>+ C6: [145] i=23
+Note over C6: [145] 0 ms | q=1 | g=d | v=2
+Q ->>+ C8: [146] i=32
+Note over C8: [146] 9 ms | q=1 | g=c | v=3
+C6 -->>- Q: [147] q=1 g=d i=23
+Q ->>+ C2: [151] i=31
+Note over C2: [151] 8 ms | q=1 | g=b | v=3
+C7 -->>- Q: [151] q=2 g=e i=39
+Q ->>+ C10: [151] i=30
+Note over C10: [151] 3 ms | q=1 | g=a | v=3
+C1 -->>- Q: [152] q=2 g=d i=38
+Q ->>+ C4: [153] i=37
+Note over C4: [153] 7 ms | q=2 | g=c | v=3
+Q ->>+ C9: [153] i=36
+Note over C9: [153] 4 ms | q=2 | g=b | v=3
+Q ->>+ C3: [153] i=34
+Note over C3: [153] 9 ms | q=1 | g=e | v=3
+C10 -->>- Q: [154] q=1 g=a i=30
+Q ->>+ C5: [154] i=33
+Note over C5: [155] 3 ms | q=1 | g=d | v=3
+Q ->>+ C6: [155] i=35
+Note over C6: [155] 5 ms | q=2 | g=a | v=3
+C8 -->>- Q: [155] q=1 g=c i=32
+C9 -->>- Q: [157] q=2 g=b i=36
+C5 -->>- Q: [157] q=1 g=d i=33
+Q ->>+ C7: [158] i=49
+Note over C7: [158] 1 ms | q=2 | g=e | v=4
+C2 -->>- Q: [159] q=1 g=b i=31
+C7 -->>- Q: [159] q=2 g=e i=49
+C4 -->>- Q: [160] q=2 g=c i=37
+C6 -->>- Q: [160] q=2 g=a i=35
+Q ->>+ C1: [161] i=40
+Note over C1: [161] 2 ms | q=1 | g=a | v=4
+Q ->>+ C10: [162] i=42
+Note over C10: [162] 6 ms | q=1 | g=c | v=4
+C3 -->>- Q: [162] q=1 g=e i=34
+C1 -->>- Q: [162] q=1 g=a i=40
+Q ->>+ C8: [164] i=46
+Note over C8: [164] 7 ms | q=2 | g=b | v=4
+Q ->>+ C9: [165] i=43
+Note over C9: [165] 9 ms | q=1 | g=d | v=4
+Q ->>+ C5: [167] i=48
+Note over C5: [167] 6 ms | q=2 | g=d | v=4
+C10 -->>- Q: [167] q=1 g=c i=42
+Q ->>+ C2: [168] i=47
+Note over C2: [168] 8 ms | q=2 | g=c | v=4
+Q ->>+ C7: [168] i=44
+Note over C7: [168] 9 ms | q=1 | g=e | v=4
+Q ->>+ C4: [169] i=41
+Note over C4: [169] 7 ms | q=1 | g=b | v=4
+Q ->>+ C6: [169] i=45
+Note over C6: [169] 5 ms | q=2 | g=a | v=4
+C8 -->>- Q: [172] q=2 g=b i=46
+C5 -->>- Q: [173] q=2 g=d i=48
+C6 -->>- Q: [173] q=2 g=a i=45
+C9 -->>- Q: [174] q=1 g=d i=43
+C2 -->>- Q: [175] q=2 g=c i=47
+C4 -->>- Q: [175] q=1 g=b i=41
+C7 -->>- Q: [177] q=1 g=e i=44
+Note over C4: [178] Exited
+Note over C2: [178] Exited
+Note over C7: [179] Exited
+Note over C3: [179] Wait 13 ms
+Note over C3: [179] Exited
+Note over C10: [183] Wait 12 ms
+Note over C10: [183] Exited
+Note over C1: [186] Wait 18 ms
+Note over C1: [186] Exited
+Note over C5: [188] Wait 10 ms
+Note over C5: [188] Exited
+Note over C9: [188] Wait 10 ms
+Note over C9: [188] Exited
+Note over C8: [189] Wait 13 ms
+Note over C8: [189] Exited
+Note over C6: [192] Wait 13 ms
+Note over C6: [192] Exited

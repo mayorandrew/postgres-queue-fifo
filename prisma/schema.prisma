@@ -1,0 +1,26 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum JobStatus {
+  queued
+  started
+  succeeded
+  failed
+}
+
+model Job {
+  id            Int       @id @default(autoincrement())
+  queue         String
+  groupId       String
+  status        JobStatus @default(queued)
+  lastStartedAt DateTime? @db.Timestamptz
+  finishedAt    DateTime? @db.Timestamptz
+  attempts      Int       @default(0)
+  data          Json      @db.JsonB
+  result        Json?     @db.JsonB
+  error         Json?     @db.JsonB
+  createdAt     DateTime  @default(now()) @db.Timestamptz
+  updatedAt     DateTime  @default(now()) @updatedAt @db.Timestamptz
+}
