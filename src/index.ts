@@ -2,6 +2,70 @@ import { Kysely, Selectable, Simplify, sql, Transaction } from 'kysely';
 import type { DB, Job } from 'kysely-codegen';
 
 /**
+ * Removes old job records
+ * @param db - Kysely database interface
+ * @param intervalMs - amount of milliseconds defining how old a record should be to be considered for deletion
+ */
+export async function removeOldJobs(
+  db: Kysely<DB>,
+  intervalMs: number = 24 * 60 * 60 * 1000
+) {
+  await db
+    .deleteFrom('Job')
+    .using((qb) =>
+      qb
+        .selectFrom('Job')
+        .select(['id'])
+        .where(
+          'updatedAt',
+          '<',
+          sql`now() - (interval '1 millisecond') * ${intervalMs}`,
+        )
+        .where('status', 'in', ['succeeded', 'failed'])
+        .forUpdate()
+        .skipLocked()
+        .as('t'),
+    )
+    .whereRef('Job.id', '=', 't.id')
+    .execute()
+    .catch((cause) => {
+      throw new Error('Error deleting old jobs', { cause });
+    });
+}
+
+/**
+ * Removes old queue groups which haven't been used for a given interval of time
+ * @param db - Kysely database interface
+ * @param intervalMs - amount of milliseconds defining how old a record should be to be considered for deletion
+ */
+export async function removeOldGroups(
+  db: Kysely<DB>,
+  intervalMs: number = 24 * 60 * 60 * 1000,
+) {
+  await db
+    .deleteFrom('QueueGroup')
+    .using((qb) =>
+      qb
+        .selectFrom('QueueGroup')
+        .select(['queue', 'groupId'])
+        .where(
+          'updatedAt',
+          '<',
+          sql`now() - (interval '1 millisecond') * ${intervalMs}`,
+        )
+        .forUpdate()
+        .skipLocked()
+        .as('t'),
+    )
+    .whereRef('QueueGroup.queue', '=', 't.queue')
+    .whereRef('QueueGroup.groupId', '=', 't.groupId')
+    .execute()
+    .catch((cause) => {
+      throw new Error('Error deleting old queue groups', { cause });
+    });
+}
+
+/**
  * Queues new job for execution in a specific queue.
  * Returns job record including the job id.
  *

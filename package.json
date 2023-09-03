@@ -1,7 +1,7 @@
 {
   "name": "postgres-queue-fifo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Proof of concept for group concurrency controlled job queue in PostgreSQL",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {

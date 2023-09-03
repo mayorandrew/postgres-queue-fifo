@@ -1,10 +1,10 @@
-import testLib, { TestFn } from 'ava';
-import { Kysely, PostgresDialect, sql } from 'kysely';
-import pg from 'pg';
+import * as fs from 'fs/promises';
 import dotenv from 'dotenv';
+import testLib, { TestFn } from 'ava';
+import pg from 'pg';
+import { Kysely, PostgresDialect, sql } from 'kysely';
 import type { DB } from 'kysely-codegen';
 import { queueJob, tryRunNextJob } from '../src/index.js';
-import * as fs from 'fs/promises';
 
 dotenv.config();
 
