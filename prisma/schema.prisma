@@ -10,6 +10,15 @@ enum JobStatus {
   failed
 }
 
+model QueueGroup {
+  queue     String
+  groupId   String
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  @@id([queue, groupId])
+}
+
 model Job {
   id            Int       @id @default(autoincrement())
   queue         String
@@ -23,4 +32,6 @@ model Job {
   error         Json?     @db.JsonB
   createdAt     DateTime  @default(now()) @db.Timestamptz
   updatedAt     DateTime  @default(now()) @updatedAt @db.Timestamptz
+
+  @@index([queue, groupId, status, id])
 }

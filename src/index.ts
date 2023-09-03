@@ -1,6 +1,5 @@
 import { Kysely, Selectable, Simplify, sql, Transaction } from 'kysely';
 import type { DB, Job } from 'kysely-codegen';
-import pg from 'pg';
 
 /**
  * Queues new job for execution in a specific queue.
@@ -17,6 +16,19 @@ export async function queueJob(
   groupId: string,
   data: object,
 ) {
+  await db
+    .insertInto('QueueGroup')
+    .values({
+      queue,
+      groupId,
+    })
+    .onConflict((cb) =>
+      cb.columns(['queue', 'groupId']).doUpdateSet({
+        updatedAt: sql`now()`,
+      }),
+    )
+    .execute();
+
   return await db
     .insertInto('Job')
     .values({
@@ -31,79 +43,65 @@ export async function queueJob(
 }
 
 async function startNextJob(db: Kysely<DB>, queues: '*' | string[]) {
-  while (true) {
-    try {
-      return await(
-        db
-          .transaction()
-          .setIsolationLevel('serializable')
-          .execute((trx) => {
-            return trx
-              .updateTable('Job')
-              .set((eb) => ({
-                status: 'started',
-                lastStartedAt: eb.fn('now', []),
-                attempts: eb('attempts', '+', 1),
-                updatedAt: eb.fn('now', []),
-              }))
-              .where('id', 'in', (eb) =>
-                eb
+  return await db.transaction().execute((trx) => {
+    return trx
+      .updateTable('Job')
+      .set((eb) => ({
+        status: 'started',
+        lastStartedAt: eb.fn('now', []),
+        attempts: eb('attempts', '+', 1),
+        updatedAt: eb.fn('now', []),
+      }))
+      .where('id', 'in', (eb) =>
+        eb
+          .selectFrom('Job')
+          .select('id')
+          .innerJoin('QueueGroup', (join) =>
+            join
+              .onRef('Job.queue', '=', 'QueueGroup.queue')
+              .onRef('Job.groupId', '=', 'QueueGroup.groupId'),
+          )
+          .where((eb) =>
+            eb.and([
+              eb('id', 'in', (eb) => {
+                const f1 = eb
                   .selectFrom('Job')
+                  .distinctOn(['queue', 'groupId'])
                   .select('id')
-                  .where((eb) =>
-                    eb.and([
-                      eb('id', 'in', (eb) => {
-                        const f1 = eb
-                          .selectFrom('Job')
-                          .distinctOn(['queue', 'groupId'])
-                          .select('id')
-                          .where('status', 'in', ['queued', 'started']);
+                  .where('status', 'in', ['queued', 'started']);
 
-                        const f2 =
-                          queues === '*' ? f1 : f1.where('queue', 'in', queues);
+                const f2 =
+                  queues === '*' ? f1 : f1.where('queue', 'in', queues);
 
-                        return f2
-                          .orderBy('queue')
-                          .orderBy('groupId')
-                          .orderBy(sql`status = 'started'`, 'desc')
-                          .orderBy('id');
-                      }),
-                      eb.or([
-                        eb('status', '=', 'queued'),
-                        eb.and([
-                          eb('status', '=', 'started'),
-                          eb(
-                            'lastStartedAt',
-                            '<',
-                            sql`now
-                            () - interval '2 seconds'`,
-                          ),
-                        ]),
-                      ]),
-                    ]),
-                  )
-                  .limit(1)
-                  .forUpdate()
-                  .skipLocked(),
-              )
-              .returningAll()
-              .executeTakeFirst();
-          })
-      );
-    } catch (error) {
-      if (error instanceof pg.DatabaseError && error.code === '40001') {
-        continue;
-      }
-
-      throw error;
-    }
-  }
+                return f2.orderBy('queue').orderBy('groupId').orderBy('id');
+              }),
+              eb.or([
+                eb('status', '=', 'queued'),
+                eb.and([
+                  eb('status', '=', 'started'),
+                  eb('lastStartedAt', '<', sql`now() - interval '2 seconds'`),
+                ]),
+              ]),
+            ]),
+          )
+          .limit(1)
+          .forUpdate()
+          .skipLocked(),
+      )
+      .returningAll()
+      .executeTakeFirst();
+  });
 }
 
 function lockJob(trx: Transaction<DB>, job: Simplify<Selectable<Job>>) {
   return trx
     .selectFrom('Job')
     .selectAll()
+    .innerJoin('QueueGroup', (join) =>
+      join
+        .onRef('QueueGroup.queue', '=', 'Job.queue')
+        .onRef('QueueGroup.groupId', '=', 'Job.groupId'),
+    )
     .where('id', '=', job.id)
     .limit(1)
     .forUpdate()

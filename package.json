@@ -5,7 +5,11 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "test": "ava"
+    "build": "tsc",
+    "test": "ava",
+    "prisma:push": "prisma db push",
+    "prisma:gen": "prisma migrate dev --name",
+    "kysely:gen": "kysely-codegen"
   },
   "author": "",
   "license": "ISC",
